@@ -1,0 +1,47 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+
+# Flask auto-generated files
+instance/
+__pycache__/
+.env
+
+# Environment variables
+.env.local
+.env.dev
+.env.prod
+
+# IDE (por ejemplo, PyCharm)
+.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compiled C extension
+*.so
+
+# Compiled C++ extension
+*.pyd
+
+# Dist directory
+/dist/
+
+# Build directory
+/build/
+
+# eggs
+*.egg-info/
+
+# Pip lock file
+pip-lock.txt

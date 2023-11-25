@@ -8,11 +8,41 @@ En el contexto de una aplicación Flask, la arquitectura de blueprints se refier
 
 Un "blueprint" en Flask es esencialmente un conjunto de operaciones que pueden incluir rutas, controladores (funciones de vista), modelos y archivos estáticos. Al utilizar blueprints, puedes dividir tu aplicación en módulos lógicos y luego registrar esos módulos en la aplicación principal. Esto mejora la modularidad y facilita la comprensión del código
 
+## Base de datos
+
+![Descripción de la imagen](/Doc/Img/Clase%20UML.jpeg)
+
+#### Productos
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `INT` | **Required**. Primary key auto incrementable |
+| `nombre` | `STRING` | **Required**. nombre del producto |
+| `Precio` | `DOUBLE` | **Required**. Precio del producto |
+| `Descripcion` | `LONGTEXT` | **Required**. Descripción del producto |
+| `Ref` | `STRING` | **Opcional**. Referencia del producto |
+| `Asset` | `STRING` | **Opcional**. Asset del producto |
+
+#### Imagenes
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `INT` | **Required**. Primary key auto incrementable |
+| `Img` | `LONGTEXT` | **Required**. Ruta de la imagen o base64 |
+
+#### Categorias
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `INT` | **Required**. Primary key auto incrementable |
+| `Nombre` | `STRING` | **Required**. Nombre de la categoria |
+
 ## Estructura de caperas
 
 ```bash
 .
 ├── app
+│   ├── assets
 │   ├── config
 │   │   ├── development.py
 │   │   └── __init__.py
@@ -34,6 +64,10 @@ Un "blueprint" en Flask es esencialmente un conjunto de operaciones que pueden i
 ├── requirements.txt
 └── run.py
 ```
+
+* asset : Guarda los archivos multimedia y recursos necesarios
+* config : Configuraciones globales del sistema
+
 Dentro de app se encontraran los blueprints o modulos de la aplicacion divididos por los puntos evatualuativos de la prueba que son los siguiente
 
 1. Página Principal:
