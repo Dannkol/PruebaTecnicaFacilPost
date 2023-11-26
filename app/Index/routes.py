@@ -38,15 +38,9 @@ def borrar_producto(producto_id):
     return redirect(url_for('Index.index'))
 
 # Vista principal
-@Index.route('/', methods=['GET', 'POST'])
+@Index.route('/', methods=['GET'])
 def index():
     img_urls = []
-
-    if request.method == 'POST':
-        # Si se envió un formulario de borrado, procesa el borrado y redirige
-        producto_id_a_borrar = int(request.form.get('producto_id'))
-        borrar_producto(producto_id_a_borrar)
-        return redirect(url_for('Index.index'))
 
     try:
         # Intentar establecer una conexión y realizar una operación simple en la base de datos
