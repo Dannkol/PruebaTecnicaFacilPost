@@ -105,9 +105,10 @@ def agregar_producto():
                 (nombre, precio, descripcion, ref)
             )
         else:
+            asset_path = "models/{}".format(asset)
             cursor.execute(
                 "INSERT INTO Productos (Nombre, Precio, Descripcion, Ref, Asset) VALUES (%s, %s, %s, %s, %s)",
-                (nombre, precio, descripcion, ref, asset)
+                (nombre, precio, descripcion, ref, asset_path)
             )
 
         product_id = cursor.lastrowid # Obtener el ID del producto insertado

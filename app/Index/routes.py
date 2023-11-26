@@ -14,18 +14,22 @@ def borrar_producto(producto_id):
         cursor = connection.cursor() 
         cursor.execute(f"SELECT Asset FROM Productos WHERE Id = {producto_id};")
         asset_model_path = cursor.fetchone()[0] # optiene el path de la modelo a borrar
-        cursor.execute(f"SELECT Img FROM Imagenes_de_Productos JOIN Imagenes ON Imagenes_de_Productos.Id_Img = Imagenes.Id WHERE Id_Productos = {producto_id};")
-        asset_img_path = cursor.fetchone()[0]  # optiene el path del imagen a borrar
+        cursor.execute(f"SELECT Img, Id FROM Imagenes_de_Productos JOIN Imagenes ON Imagenes_de_Productos.Id_Img = Imagenes.Id WHERE Id_Productos = {producto_id};")
+        asset_img_path = [path for path in cursor.fetchall()] # optiene el path del imagen a borrar
         cursor.execute(f"DELETE FROM Productos WHERE Id = {producto_id};")
+
+        print(asset_img_path)
 
         # Borra el modelo y la imagen
         if asset_model_path:
             model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..' ,'assets',asset_model_path)
             os.remove(model_path)
         if asset_img_path:
-            img_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..' ,'assets',asset_img_path)
-            print("path:", os.path.join(os.path.dirname(os.path.abspath(__file__)), '..' ,'assets',asset_img_path))
-            os.remove(img_path)
+            for path in asset_img_path:
+                cursor.execute(f"DELETE FROM Imagenes WHERE Id = {path[1]};")
+                img_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..' ,'assets',path[0])
+                print("path:", os.path.join(os.path.dirname(os.path.abspath(__file__)), '..' ,'assets',path[0]))
+                os.remove(img_path)
 
         connection.commit()
     except Exception as e:
