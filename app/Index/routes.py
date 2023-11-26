@@ -46,7 +46,7 @@ def index():
         # Intentar establecer una conexión y realizar una operación simple en la base de datos
         connection = connect_to_database()
         cursor = connection.cursor() 
-        cursor.execute("SELECT Productos.Id AS id, Productos.Nombre AS NombreProducto, Productos.Precio, Imagenes.Img AS RutaImagen FROM Productos JOIN Imagenes_de_Productos ON Productos.Id = Imagenes_de_Productos.Id_Productos JOIN Imagenes ON Imagenes_de_Productos.Id_Img = Imagenes.Id;") 
+        cursor.execute("SELECT Productos.Id AS id, Productos.Nombre AS NombreProducto, Productos.Precio, MIN(Imagenes.Img) AS RutaImagen FROM Productos JOIN Imagenes_de_Productos ON Productos.Id = Imagenes_de_Productos.Id_Productos JOIN Imagenes ON Imagenes_de_Productos.Id_Img = Imagenes.Id GROUP BY Productos.Id;") 
         results = cursor.fetchall() 
         for result in results:
             img_urls.append({
