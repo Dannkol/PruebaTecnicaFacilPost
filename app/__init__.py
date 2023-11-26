@@ -3,6 +3,7 @@ import os
 # Blueprints
 from .Index import Index
 from .Create import Index_create
+from .Detalles import Index_Detalles
 
 # Modulos de configuracion
 from .config import DevelopmentConfig
@@ -15,6 +16,8 @@ app = Flask(__name__, template_folder='Templates', static_folder='Templates/stat
 # Registro de blueprints
 app.register_blueprint(Index)
 app.register_blueprint(Index_create)
+app.register_blueprint(Index_Detalles)
+
 
 
 app.config.from_object(DevelopmentConfig)

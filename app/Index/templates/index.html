@@ -19,7 +19,6 @@
   </head>
   <body>
     <h1>Productos</h1>
-
     <div class="d-flex flex-wrap justify-content-center gap-3">
         {% for archivo in img_url %}
         <div class="card" style="width: 18rem ; height: 350px">
@@ -32,7 +31,7 @@
           <div class="card-body" style="height: 100%;">
             <h5 class="card-title" style="text-overflow: ellipsis;">{{ archivo.NombreProducto }}</h5>
             <p class="card-text" style="text-overflow: ellipsis;">Precio: {{ archivo.Precio }} .</p>
-            <a href="#" class="btn btn-primary">Ver Mas</a>
+            <a href="/detalle_producto/{{ archivo.Id }}" class="btn btn-primary">Ver Mas</a>
             <a href="{{ url_for('Index.borrar_producto', producto_id=archivo.Id) }}" class="btn btn-danger">Eliminar</a>
           </div>
         </div>

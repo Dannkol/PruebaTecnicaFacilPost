@@ -74,26 +74,16 @@ def agregar_producto():
     
     # Guardar modelos 3D
     asset = None
-    if request.files.getlist('asset[]') and request.files.getlist('asset[]')[0].read().strip():
-        # Verificar si hay archivos y el valor no está en blanco
-        for modelo in request.files.getlist('asset[]'):
-            filename = secrets.token_hex(16) + secure_filename(modelo.filename)
-            model_path = os.path.join(models_folder, filename)
-            modelo.save(model_path)
-            print(model_path)
-            asset = filename
+    if 'asset' in request.files and request.files['asset']:
+        modelo = request.files['asset']
+        filename = secrets.token_hex(16) + secure_filename(modelo.filename)
+        model_path = os.path.join(models_folder, filename)
+        modelo.save(model_path)
+        print(model_path)
+        asset = filename
 
-    print(
-        nombre,
-        precio,
-        descripcion,
-        ref,
-        asset,
-        categorias,
-        imagenes
-    )
 
-        # Conectar a la base de datos
+    # Conectar a la base de datos
     connection = connect_to_database()
     cursor = connection.cursor()
 
