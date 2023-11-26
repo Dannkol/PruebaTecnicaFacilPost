@@ -22,7 +22,7 @@ app.config.from_object(DevelopmentConfig)
 # Configuración de rutas estaticas
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['ASSETS_FOLDER'] = 'assets'
-app.config['ASSETS_STATIC_FOLDER'] = 'static'
+app.config['APP_FOLDER'] = 'app'
 
 # Manejo de errores
 @app.errorhandler(404)
