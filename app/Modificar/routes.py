@@ -194,6 +194,11 @@ def actualizar_producto(producto_id):
                     (nuevo_nombre, nuevo_precio, nueva_descripcion, nueva_ref, producto_id)
                 )
             else:
+                cursor.execute("SELECT Asset FROM Productos WHERE Id = %s", (producto_id,))
+                resultado = cursor.fetchone()
+                model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..' ,'assets',resultado[0])
+                print(model_path)
+                os.remove(model_path)
                 asset_path = "models/{}".format(asset)
                 cursor.execute(
                     "UPDATE Productos SET Nombre = %s, Precio = %s, Descripcion = %s, Ref = %s, Asset = %s WHERE Id = %s",
