@@ -1,5 +1,4 @@
-DROP DATABASE `InvFacilPost`;
-
+DROP DATABASE IF EXISTS `InvFacilPost`;
 CREATE DATABASE IF NOT EXISTS `InvFacilPost`;
 
 USE `InvFacilPost`;
