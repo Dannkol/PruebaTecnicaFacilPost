@@ -16,8 +16,8 @@ Un "blueprint" en Flask es esencialmente un conjunto de operaciones que pueden i
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `id` | `INT` | **Required**. Primary key auto incrementable |
-| `nombre` | `STRING` | **Required**. nombre del producto |
+| `Id` | `INT` | **Required**. Primary key auto incrementable |
+| `Nombre` | `STRING` | **Required**. nombre del producto |
 | `Precio` | `DOUBLE` | **Required**. Precio del producto |
 | `Descripcion` | `LONGTEXT` | **Required**. Descripción del producto |
 | `Ref` | `STRING` | **Opcional**. Referencia del producto |
@@ -27,7 +27,7 @@ Un "blueprint" en Flask es esencialmente un conjunto de operaciones que pueden i
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `id` | `INT` | **Required**. Primary key auto incrementable |
+| `Id` | `INT` | **Required**. Primary key auto incrementable |
 | `Img` | `LONGTEXT` | **Required**. Ruta de la imagen o base64 |
 
 #### Categorias
@@ -41,25 +41,54 @@ Un "blueprint" en Flask es esencialmente un conjunto de operaciones que pueden i
 
 ```bash
 .
+├── Doc
+│   └── Img
+│       └── Clase UML.jpeg
 ├── app
-│   ├── assets
-│   ├── config
-│   │   ├── development.py
-│   │   └── __init__.py
-│   ├── Index
-│   │   ├── __init__.py
-│   │   ├── models.py
-│   │   ├── routes.py
-│   │   ├── static
-│   │   │   ├── main.css
-│   │   │   └── main.js
-│   │   └── templates
-│   │       └── index.html
-│   ├── __init__.py
-│   └── Templates
-│       ├── static
-│       └── templates
-│           └── 404.html
+│   ├── Create
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   └── templates
+│   │       └── crear_producto.html
+│   ├── Detalles
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   ├── static
+│   │   │   └── main.css
+│   │   └── templates
+│   │       └── detalle_producto.html
+│   ├── Index
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── routes.py
+│   │   ├── static
+│   │   │   ├── main.css
+│   │   │   └── main.js
+│   │   └── templates
+│   │       └── index.html
+│   ├── Modificar
+│   │   ├── __init__.py
+│   │   ├── routes.py
+│   │   ├── static
+│   │   │   └── main.css
+│   │   └── templates
+│   │       └── actualizar_producto.html
+│   ├── Templates
+│   │   └── templates
+│   │       └── 404.html
+│   ├── __init__.py
+│   ├── assets
+│   │   ├── img
+│   │   │   ├── imagen1.jpg
+│   │   │   ├── imagen2.jpg
+│   │   │   └── imagen3.jpg
+│   │   └── models
+│   │       └── mesa_simple.glb
+│   └── config
+│       ├── __init__.py
+│       └── development.py
+├── db
+│   └── script.sql
 ├── readme.md
 ├── requirements.txt
 └── run.py
@@ -67,8 +96,13 @@ Un "blueprint" en Flask es esencialmente un conjunto de operaciones que pueden i
 
 * asset : Guarda los archivos multimedia y recursos necesarios
 * config : Configuraciones globales del sistema
+* Index : Modulo principal de listar productos
+* Create : Modulo de creacion de producto
+* Modificar : Modulo de modificar producto
+* Templates : Templates y archivos staticos para usar en casos particulares
+* db : Scripts de la base de datos
 
-Dentro de app se encontraran los blueprints o modulos de la aplicacion divididos por los puntos evatualuativos de la prueba que son los siguiente
+# Criterios de evaluacion
 
 1. Página Principal:
     - Mostrar una tabla con los productos.
@@ -94,3 +128,90 @@ Dentro de app se encontraran los blueprints o modulos de la aplicacion divididos
 5. Eliminar Producto:
     - Al hacer clic en el botón "Eliminar" junto a un producto en la tabla, se elimina
     el producto de la base de datos
+
+# Ejecucion en local
+
+## Python
+* Python 3.10.12
+
+### Dependencias
+
+```bash
+blinker==1.7.0
+certifi==2023.11.17
+charset-normalizer==3.3.2
+click==8.1.7
+Flask==3.0.0
+greenlet==3.0.1
+idna==3.6
+itsdangerous==2.1.2
+Jinja2==3.1.2
+MarkupSafe==2.1.3
+mysql-connector-python==8.2.0
+protobuf==4.21.12
+python-dotenv==1.0.0
+requests==2.31.0
+SQLAlchemy==2.0.23
+typing_extensions==4.8.0
+urllib3==2.1.0
+Werkzeug==3.0.1
+```
+
+las puedes encontrar e instalar en [requirements.txt](./requirements.txt)
+
+## Instalacion
+
+`NOTA: Si usas windows tendras que instalar wsl(Windows Subsystem for Linux) su instalacion es facil por medio de la tienda de windows`
+
+* [INSTALA WSL](https://www.microsoft.com/store/productId/9P9TQF7MRM4R?ocid=pdpshare)
+* [INSTALA UBUNTU PARA WSL](https://www.microsoft.com/store/productId/9PN20MSR04DW?ocid=pdpshare)
+* [DOCUMENTACION WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
+
+### Comandos de instalacion
+
+#### Clona el repositorio
+```bash
+git clone https://github.com/Dannkol/PruebaTecnicaFacilPost.git
+```
+
+#### Creacion del entorno virual
+```bash
+python3 -m venv .venv
+```
+
+#### Iniciamos el entorno virtual
+```bash
+. .venv/bin/activate
+```
+`NOTA: En caso de problemas instale el paquete virtualenv`
+
+#### Instalacion de dependencias
+```bash
+pip install -r requirements.txt
+```
+
+#### Configuracion de la variables de entorno
+
+Con el archivo [.env_example](./.env_example) crea un archivo .env y cambias las variables a tu necesidad
+
+* DB_HOST : El host de la base de datos
+* DB_USER : El usuario de la base de datos
+* DB_PASSWORD : La contraseña de la base de datos
+* DB_NAME : La nombre de la base de datos de la base de datos
+
+#### Montar la base de datos
+
+`NOTA: Version de MySQL : mysql  Ver 8.0.35-0ubuntu0.22.04.1 for Linux on x86_64 ((Ubuntu))`
+
+Con el archivo [db/script.sql](db/script.sql) puedes crear la base de datos, copy y pega en la terminal sql o trata de usar este comando  desde el directorio raiz del proyecto
+
+```bash
+mysql -u root -p < db/script.sql
+```
+
+#### Ejecucion
+
+Una vez realizados todos los pasos tienes que ejecutar el siguiente comendo desde la raiz del proyecto
+```bash
+python3 run.py
+```
