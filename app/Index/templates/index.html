@@ -9,7 +9,6 @@
   <title>Bootstrap demo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{{ url_for('Index.static', filename='main.css') }}">
 </head>
 
@@ -47,7 +46,7 @@
                 </span>
                 <span data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="top"
                 data-bs-title="Click para editar el producto">
-                <li><a href="{{ url_for('Index.borrar_producto', producto_id=archivo.Id) }}"
+                <li><a href="{{ url_for('Index_Modificar.actualizar_producto', producto_id=archivo.Id) }}"
                     class="btn btn-danger">⚙</a></li>
                 </span>
               </ul>

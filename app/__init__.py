@@ -4,6 +4,7 @@ import os
 from .Index import Index
 from .Create import Index_create
 from .Detalles import Index_Detalles
+from .Modificar import Index_Modificar
 
 # Modulos de configuracion
 from .config import DevelopmentConfig
@@ -17,6 +18,7 @@ app = Flask(__name__, template_folder='Templates', static_folder='Templates/stat
 app.register_blueprint(Index)
 app.register_blueprint(Index_create)
 app.register_blueprint(Index_Detalles)
+app.register_blueprint(Index_Modificar)
 
 
 

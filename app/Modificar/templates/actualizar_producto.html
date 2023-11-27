@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('Index_Modificar.static', filename='main.css') }}">
+
+</head>
+
+<body>
+    {% set id = producto['Id'] %}
+    <section class="section-products">
+        <form class="d-flex" style="width: 100%;" method="post"
+            action="{{ url_for('Index_Modificar.actualizar_producto', producto_id=producto['Id']) }}"
+            enctype="multipart/form-data">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="header">
+                            <h1>Edita el producto {{ producto['Nombre'] }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12 col-lg-3 col-xl-3 bg-secondary p-2 rounded"
+                        style="height: 100%; color:white;">
+                        <div class="input-group rounded-pill mb-3">
+                            <span class="input-group-text" for="nombre" id="inputGroup-sizing-default">Nombre</span>
+                            <input value="{{ producto['Nombre'] }}" type="text" name="nombre" class="form-control"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                        </div>
+                        <label for="categorias">Categorías:</label>
+                        <select name="categorias[]" class="form-select mb-3" multiple
+                            aria-label="Multiple select example" data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-title="Usa la tecla Ctrl para selecionar multiples">
+                            {% for categoria in producto['CategoriasAll'] %}
+                            {% if categoria[1] in producto['Categorias'] %}
+                            <option value="{{ categoria[0] }}" selected>
+                                <span class="d-inline-block" tabindex="0">
+                                    {{ categoria[1] }}
+                                </span>
+                            </option>
+                            {% else %}
+                            <option value="{{ categoria[0] }}">
+                                <span class="d-inline-block" tabindex="0">
+                                    {{ categoria[1] }}
+                                </span>
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                        <div class="input-group rounded-pill mb-3">
+                            <div class="mb-3">
+                                <label for="asset" class="form-label">Asset (Opcional)</label>
+                                <input class="form-control" value="{{ producto['Asset'] }}" type="file" name="asset"
+                                    accept=".glb" />
+                            </div>
+                            <span data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-title="Elimina el model3D">
+                                {% if producto['Asset'] %}
+                                {% set id_asset = producto['Asset'] %}
+
+                                <a onclick="confirmDelete('{{ id_asset.split('/')[-1] }}', '{{ id }}', 'borrarmodelo')"
+                                    class="btn btn-danger">🗑</a>
+                                {% endif %}
+
+                            </span>
+                        </div>
+                        <div class="input-group rounded-pill mb-3">
+                            <span class="input-group-text" for="precio" id="inputGroup-sizing-default">Precio</span>
+                            <input type="text" value="{{ producto['Precio'] }}" name="precio" class="form-control"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                        </div>
+                        <div class="input-group rounded-pill mb-3">
+                            <span class="input-group-text" for="ref" id="inputGroup-sizing-default">Refetencia</span>
+                            <input type="text" value="{{ producto['Ref'] }}" name="ref" class="form-control"
+                                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                        </div>
+                        <div class="input-group rounded-pill mb-3">
+                            <span>Descripcion</span>
+                            <div class="input-group mb-3">
+                                <textarea type="text" rows="2" name="descripcion" class="form-control"
+                                    aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">{{ producto['Descripcion'] }}</textarea>
+                            </div>
+                        </div>
+                        <div class="input-group rounded-pill mb-3">
+                            <div class="mb-3">
+                                <label for="imagenes" class="form-label">Imágenes (selecciona múltiples)</label>
+                                <input class="form-control" type="file" name="imagenes[]" accept="image/*" multiple />
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex gap-2">
+                            <div class="">
+                                <button type="submit" class="btn btn-light">Enviar</button>
+                            </div>
+                            <div class="">
+                                <a href="/" class="btn btn-danger">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Imagen -->
+
+                    <div class="col-md-12 col-lg-8 col-xl-8 d-flex flex-wrap justify-content-center">
+                        <div class="z-3 position-absolute justify-content-center text-center" style="width: 0px;">
+
+                            <div class="header">
+                                <h4>Imagenes</h4>
+                            </div>
+
+                        </div>
+                        {% for img in producto['Imagenes'] %}
+                        <div id="product-1" class="single-product">
+                            <div class="part-1"
+                                style="background: url('{{ img }}') no-repeat center; background-size: contain;">
+                                {% if producto['Imagenes']|length > 1 %}
+                                <ul>
+                                    <span data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" data-bs-title="Elimina tambien de la base de datos">
+                                        <li>
+                                            
+                                            <a onclick="confirmDelete('{{ img.split('/')[-1] }}', '{{ id }}', 'borrarimg')"
+                                                class="btn btn-danger">🗑</a>
+                                        </li>
+                                    </span>
+                                </ul>
+                                {% else %}
+                                <ul>
+                                    <span data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" data-bs-title="No puedes eliminar todas las imagenes de un producto">
+                                        <li>
+                                            
+                                            <span 
+                                                class="btn btn-danger">🗑</span>
+                                        </li>
+                                    </span>
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div class="part-2">
+                                <!-- Agrega cualquier otra información dinámica que desees mostrar -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script>
+        const tooltipTriggerList = document.querySelectorAll(
+            '[data-bs-toggle="tooltip"]'
+        );
+        const tooltipList = [...tooltipTriggerList].map(
+            (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+        );
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(imgName, productId, url) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, borrarlo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Elimina!",
+                        text: "El archivo fue eliminado de la base de datos.",
+                        icon: "success",
+                        didClose: () => {
+                            window.location.href = `/${url}/` + imgName + "/" + productId;
+                        }
+                    });
+
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
