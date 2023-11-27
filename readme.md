@@ -215,3 +215,7 @@ Una vez realizados todos los pasos tienes que ejecutar el siguiente comendo desd
 ```bash
 python3 run.py
 ```
+
+# Manual de uso
+
+* VIDEO TUTORIAL : https://drive.google.com/file/d/1H7lsC_8PLpZc-sn56dWbtKOfAwFcLmAK/view?usp=sharing
